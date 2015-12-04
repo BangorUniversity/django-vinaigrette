@@ -101,25 +101,30 @@ class Command(django_makemessages.Command):
                         # In the reference comment in the po file, use the object's primary
                         # key as the line number, but only if it's an integer primary key
 
-                        # Use the untranslated value otherhwise when translating
-                        # multiple languages vinaigrette would use the previously
-                        # translated value (like this):
+                        # *For the edge case where the main language itself is translated!*
                         #
-                        # $ makemessages -l es
+                        # For a situation where a string in a legacy database is
+                        # constrained by a small varchar but needs longer text
+                        # e.g. Where main language is 'en'
                         #
-                        # locale/es/LC_MESSAGES/django.po:
+                        # Original:  In Process
+                        # We want:   Your application is under review.
+                        #
+                        # $ makemessages -l en
+                        #
+                        # locale/en/LC_MESSAGES/django.po:
                         #
                         #    #: application.ApplicationStatusLookup/description:0
-                        #    msgid "Yes"
-                        #    msgstr "Sí"      <---- we add this translation
+                        #    msgid "In Process"
+                        #    msgstr "Your application is under review."      <---- we add this translation
                         #
-                        # $ compilemessages -l es
-                        # $ makemessages -l fr
+                        # $ compilemessages -l en
+                        # $ makemessages -l cy
                         #
                         # locale/fr/LC_MESSAGES/django.po:
                         #
                         #    #: application.ApplicationStatusLookup/description:0
-                        #    msgid "Sí"       <---- Whaaat! This should be Yes
+                        #    msgid "Your application is under review."       <---- Whaaat! This should be 'In process'
                         #    msgstr ""
                         #
                         # So use instance.untranslated(field) to get the actual
