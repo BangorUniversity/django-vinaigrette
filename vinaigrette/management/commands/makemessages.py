@@ -121,7 +121,7 @@ class Command(django_makemessages.Command):
                         # $ compilemessages -l en
                         # $ makemessages -l cy
                         #
-                        # locale/fr/LC_MESSAGES/django.po:
+                        # locale/cy/LC_MESSAGES/django.po:
                         #
                         #    #: application.ApplicationStatusLookup/description:0
                         #    msgid "Your application is under review."       <---- Whaaat! This should be 'In process'
